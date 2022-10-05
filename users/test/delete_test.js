@@ -8,40 +8,28 @@ describe("Deleting a user", () => {
     joe.save().then(() => done());
   });
 
-  it("model instance remove", (done) => {
-    joe
-      .remove()
-      .then(() => User.findOne({ name: "Joe" }))
+  const asserName = (operation, done, name) => {
+    operation
+      .then(() => User.findOne({ name: name }))
       .then((user) => {
         assert(user === null);
         done();
       });
+  };
+
+  it("model instance remove", (done) => {
+    asserName(joe.remove(), done, "Joe");
   });
 
   it("class method remove", (done) => {
-    User.deleteOne({ name: "Joe" })
-      .then(() => User.findOne({ name: "Joe" }))
-      .then((user) => {
-        assert(user === null);
-        done();
-      });
+    asserName(User.deleteOne({ name: "Joe" }), done, "Joe");
   });
 
   it("class method findOneAndRemove", (done) => {
-    User.findOneAndRemove({ name: "Joe" })
-      .then(() => User.findOne({ name: "Joe" }))
-      .then((user) => {
-        assert(user === null);
-        done();
-      });
+    asserName(User.findOneAndRemove({ name: "Joe" }), done, "Joe");
   });
 
   it("class method findByIdAndRemove", (done) => {
-    User.findByIdAndRemove(joe._id)
-      .then(() => User.findOne({ name: "Joe" }))
-      .then((user) => {
-        assert(user === null);
-        done();
-      });
+    asserName(User.findByIdAndRemove(joe._id), done, "Joe");
   });
 });

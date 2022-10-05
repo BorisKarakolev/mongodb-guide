@@ -9,7 +9,7 @@ describe("Updating records", () => {
     joe.save().then(() => done());
   });
 
-  function assertName(operation, done, name) {
+  const assertName = (operation, done, name) => {
     operation
       .then(() => User.find({}))
       .then((users) => {
@@ -17,7 +17,7 @@ describe("Updating records", () => {
         assert(users[0].name === name);
         done();
       });
-  }
+  };
 
   it("instance type using set n save", (done) => {
     joe.set("name", "Alex");
