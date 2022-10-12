@@ -1,9 +1,13 @@
 const express = require("express");
-
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const routes = require("./routes");
 const app = express();
 
-app.get("/", (req, res) => {
-  res.json("OK");
-});
+mongoose.Promise = global.Promise
+mongoose.connect("mongodb://localhost/bambi");
+
+app.use(bodyParser.json());
+routes(app);
 
 module.exports = app;
