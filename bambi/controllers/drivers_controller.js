@@ -5,8 +5,10 @@ module.exports = {
     res.json("OK");
   },
 
-  create(req, res) {
+  create(req, res, next) {
     const driverProps = req.body;
-    Driver.create(driverProps).then((driver) => res.send(driver));
+    Driver.create(driverProps)
+      .then((driver) => res.send(driver))
+      .catch(next);
   },
 };
